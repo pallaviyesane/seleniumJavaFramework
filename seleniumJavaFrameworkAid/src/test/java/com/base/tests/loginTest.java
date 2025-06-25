@@ -1,5 +1,9 @@
 package com.base.tests;
 
+import java.io.IOException;
+import java.util.NoSuchElementException;
+
+import org.apache.poi.ss.usermodel.Sheet;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -7,14 +11,39 @@ import org.testng.annotations.Test;
 
 import com.base.BaseClass;
 import com.base.pages.LoginPage;
+import com.base.utility.DataProviders;
+import com.base.utility.ReadExcelTestData;
 
 public class loginTest extends BaseClass {
+	LoginPage loginPage;
 
-	@Test(dataProvider = "LoginDetails")
+	@Test(dataProvider = "LoginDetails", enabled = false)
 	public void loginT(String username, String password, String expectedURL) throws InterruptedException {
-		LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
+		loginPage = PageFactory.initElements(driver, LoginPage.class);
 		loginPage.login(username, password);
 		Assert.assertEquals(driver.getCurrentUrl(), expectedURL);
+	}
+
+	@Test(enabled = false)
+	public void forgrtPassword() {
+		loginPage = PageFactory.initElements(driver, LoginPage.class);
+		loginPage.forgotPassword();
+		Assert.assertEquals(driver.getCurrentUrl(),
+				"https://opensource-demo.orangehrmlive.com/web/index.php/auth/requestPasswordResetCode");
+	}
+
+	@Test(expectedExceptions = NoSuchElementException.class, enabled = false)
+	public void testExceptionTestNg() {
+		loginPage = PageFactory.initElements(driver, LoginPage.class);
+
+		loginPage.testException();
+	}
+
+	@Test(dataProvider = "login-data", dataProviderClass = DataProviders.class)
+	public void loginUsingExcelData(String username, String password) throws InterruptedException {
+		loginPage = PageFactory.initElements(driver, LoginPage.class);
+		loginPage.login(username, password);
+		// Assert.assertEquals(driver.getCurrentUrl(), expectedURL);
 	}
 
 	@DataProvider(name = "LoginDetails")
