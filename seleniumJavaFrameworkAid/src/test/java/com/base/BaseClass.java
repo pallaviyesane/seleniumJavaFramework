@@ -1,16 +1,25 @@
 package com.base;
 
+import java.io.IOException;
 import java.time.Duration;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
+
+import com.base.utility.ExtentManager;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BaseClass {
-	public WebDriver driver;
+	public static WebDriver driver;
+
+	@BeforeSuite
+	public void beforeSuite() throws IOException {
+		ExtentManager.setExtent();
+	}
 
 	@BeforeMethod
 	@Parameters("browser")
@@ -31,8 +40,12 @@ public class BaseClass {
 	}
 
 	@AfterMethod
-	public void tearDown() {
+	public void getResult(ITestResult result) {
 		driver.quit();
 	}
 
+	@AfterSuite
+	public void afterSuite() {
+		ExtentManager.endReport();
+	}
 }

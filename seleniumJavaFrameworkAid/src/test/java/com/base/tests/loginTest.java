@@ -1,9 +1,5 @@
 package com.base.tests;
 
-import java.io.IOException;
-import java.util.NoSuchElementException;
-
-import org.apache.poi.ss.usermodel.Sheet;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -12,34 +8,33 @@ import org.testng.annotations.Test;
 import com.base.BaseClass;
 import com.base.pages.LoginPage;
 import com.base.utility.DataProviders;
-import com.base.utility.ReadExcelTestData;
 
 public class loginTest extends BaseClass {
 	LoginPage loginPage;
 
-	@Test(dataProvider = "LoginDetails", enabled = false)
+	@Test(dataProvider = "LoginDetails", enabled = true)
 	public void loginT(String username, String password, String expectedURL) throws InterruptedException {
 		loginPage = PageFactory.initElements(driver, LoginPage.class);
 		loginPage.login(username, password);
 		Assert.assertEquals(driver.getCurrentUrl(), expectedURL);
 	}
 
-	@Test(enabled = false)
+	@Test(enabled = true)
 	public void forgrtPassword() {
 		loginPage = PageFactory.initElements(driver, LoginPage.class);
 		loginPage.forgotPassword();
 		Assert.assertEquals(driver.getCurrentUrl(),
-				"https://opensource-demo.orangehrmlive.com/web/index.php/auth/requestPasswordResetCode");
+				"https://opensource-demo.orangehrmlive.com/web/index.php/auth/requestPasswordResetCodes");
 	}
 
-	@Test(expectedExceptions = NoSuchElementException.class, enabled = false)
-	public void testExceptionTestNg() {
-		loginPage = PageFactory.initElements(driver, LoginPage.class);
+//	@Test(expectedExceptions = { NoSuchSessionException.class, TimeoutException.class, UnreachableBrowserException.class })
+//	public void testExceptionTestNg() throws TimeoutException {
+//		// loginPage = PageFactory.initElements(driver, LoginPage.class);
+//		driver.findElement(By.id("sdf"));
+//		loginPage.testException();
+//	}
 
-		loginPage.testException();
-	}
-
-	@Test(dataProvider = "login-data", dataProviderClass = DataProviders.class)
+	@Test(dataProvider = "login-data", dataProviderClass = DataProviders.class, enabled = true)
 	public void loginUsingExcelData(String username, String password) throws InterruptedException {
 		loginPage = PageFactory.initElements(driver, LoginPage.class);
 		loginPage.login(username, password);
