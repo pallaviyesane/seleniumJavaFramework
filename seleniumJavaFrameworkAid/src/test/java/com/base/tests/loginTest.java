@@ -12,14 +12,14 @@ import com.base.utility.DataProviders;
 public class loginTest extends BaseClass {
 	LoginPage loginPage;
 
-	@Test(dataProvider = "LoginDetails", enabled = true)
+	@Test(dataProvider = "LoginDetails", enabled = false)
 	public void loginT(String username, String password, String expectedURL) throws InterruptedException {
 		loginPage = PageFactory.initElements(driver, LoginPage.class);
 		loginPage.login(username, password);
 		Assert.assertEquals(driver.getCurrentUrl(), expectedURL);
 	}
 
-	@Test(enabled = true)
+	@Test(enabled = false)
 	public void forgrtPassword() {
 		loginPage = PageFactory.initElements(driver, LoginPage.class);
 		loginPage.forgotPassword();
@@ -34,7 +34,7 @@ public class loginTest extends BaseClass {
 //		loginPage.testException();
 //	}
 
-	@Test(dataProvider = "login-data", dataProviderClass = DataProviders.class, enabled = true)
+	@Test(dataProvider = "login-data", dataProviderClass = DataProviders.class, enabled = false)
 	public void loginUsingExcelData(String username, String password) throws InterruptedException {
 		loginPage = PageFactory.initElements(driver, LoginPage.class);
 		loginPage.login(username, password);

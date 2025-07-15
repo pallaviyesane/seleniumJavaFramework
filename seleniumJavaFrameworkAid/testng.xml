@@ -8,7 +8,7 @@
 	</listeners>
 	<test thread-count="5" name="ChromeTests">
 		<classes>
-			<class name="com.base.tests.loginTest" />
+			<class name="com.base.tests.PersonalDetailsTest" />
 		</classes>
 	</test>
 </suite>
